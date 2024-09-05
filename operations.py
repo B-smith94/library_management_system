@@ -4,10 +4,10 @@ class BookOperations:
         self.book = book
         self.author = author
         
-    def add_new_book(self, book, author):
+    def add_new_book(self, book, author, genre, pub_date):
         if book not in self:
             try:
-                self[book] = author
+                self[book] = {"Author": author, "Genre": genre, "Publication Date": pub_date, "Availability": "In Stock"} 
                 print(f"\n{book} by {author} added to library stock.\n")
             except Exception as e:
                 print(f"An error has occurred: {e}")
@@ -24,13 +24,18 @@ class BookOperations:
         pass
 
     def display_books(self):
-        for book, author in self.items():
-            print(f"--{book} by {author}")
+        for book, category in self.items():
+            print(f"Book: {book}")
+            for detail, info in category.items():
+                print(f"\t{detail}: {info}")
+            
+            
             
             
 class UserOperations(BookOperations):
-    def __init__(self, username, library_id, book):
+    def __init__(self, username, library_id, book, author):
         super().__init__(book)
+        super().__init__(author)
         self.__username = username
         self.__library_id = library_id
 

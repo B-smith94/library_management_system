@@ -22,7 +22,10 @@ def main():
                 if book_ops_choice == "1":
                     book = input("Enter the title of the book you wish to add: ").title()
                     author = input("Please enter the author: ").title()
-                    operations.BookOperations.add_new_book(library_books, book, author)
+                    genre = input("Please enter the genre (example: fantasy): ").capitalize()
+                    pub_date = input(f"What year was {book} published? (yyyy): ")
+                    operations.BookOperations.add_new_book(library_books, book, author, genre, pub_date)
+                    print(library_books)
                 elif book_ops_choice == "2":
                     pass
                 elif book_ops_choice == "3":
@@ -43,7 +46,7 @@ def main():
                     pass
                 elif book_ops_choice == "3":
                     pass
-            else:
+            elif main_menu_choice == '3':
                 print("\tAuthor Operations:")
                 print("\t1. Add a new author\n\t2. View author details\n\t3. Display all authors")
                 book_ops_choice = input("Which operation would you like to perform? (1, 2, 3, 4, or 5): ")
@@ -53,6 +56,8 @@ def main():
                     pass
                 elif book_ops_choice == "3":
                     pass
+            else:
+                print(f"{main_menu_choice} is not available.\n")
 
 if __name__ == "__main__":
     main()
