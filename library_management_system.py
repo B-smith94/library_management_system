@@ -34,28 +34,38 @@ def main():
                     pass
                 elif book_ops_choice == "5":
                     operations.BookOperations.display_books(library_books)
+                elif book_ops_choice != re.search(["1-5"]):
+                    print("You must enter a number between 1 and 5.")
                 else:
                     print(f"{book_ops_choice} is not an available option.\n")
             elif main_menu_choice == "2":
                 print("\tUser Operations:")
                 print("\t1. Add a new user\n\t2. View user details\n\t3. Display all users")
-                book_ops_choice = input("Which operation would you like to perform? (1, 2, 3, 4, or 5): ")
-                if book_ops_choice == "1":
+                user_ops_choice = input("Which operation would you like to perform? (1, 2, 3, 4, or 5): ")
+                if user_ops_choice == "1":
                     pass
-                elif book_ops_choice == "2":
+                elif user_ops_choice == "2":
                     pass
-                elif book_ops_choice == "3":
+                elif user_ops_choice == "3":
                     pass
+                elif user_ops_choice != re.search(["1-3"]):
+                    print("You must enter a number between 1 and 3.")
+                else:
+                    print(f"{user_ops_choice} is not an available option.\n")
             elif main_menu_choice == '3':
                 print("\tAuthor Operations:")
                 print("\t1. Add a new author\n\t2. View author details\n\t3. Display all authors")
-                book_ops_choice = input("Which operation would you like to perform? (1, 2, 3, 4, or 5): ")
-                if book_ops_choice == "1":
+                author_ops_choice = input("Which operation would you like to perform? (1, 2, 3, 4, or 5): ")
+                if author_ops_choice == "1":
                     pass
-                elif book_ops_choice == "2":
+                elif author_ops_choice == "2":
                     pass
-                elif book_ops_choice == "3":
+                elif author_ops_choice == "3":
                     pass
+                elif author_ops_choice != re.search(["1-3"]):
+                    print("You must enter a number between 1 and 3.")
+                else:
+                    print(f"{author_ops_choice} is not an available option.\n")
             else:
                 print(f"{main_menu_choice} is not available.\n")
 
