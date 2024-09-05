@@ -1,5 +1,9 @@
 import operations
 
+user_id = {}
+library_books = {}
+author_details = {}
+
 def main():
     while True:
         print("Welcome to the Library Management System!\n")
