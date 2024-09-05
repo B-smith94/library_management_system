@@ -1,4 +1,5 @@
 import operations
+import re
 
 user_id = {}
 library_books = {}
@@ -19,7 +20,9 @@ def main():
                 print("\t1. Add a new book\n\t2. Borrow a book\n\t3. Return a book\n\t4. Search for a book\n\t5. Display all books.")
                 book_ops_choice = input("Which operation would you like to perform? (1, 2, 3, 4, or 5): ")
                 if book_ops_choice == "1":
-                    pass
+                    book = input("Enter the title of the book you wish to add: ").title()
+                    author = input("Please enter the author: ").title()
+                    operations.BookOperations.add_new_book(library_books, book, author)
                 elif book_ops_choice == "2":
                     pass
                 elif book_ops_choice == "3":
@@ -27,7 +30,9 @@ def main():
                 elif book_ops_choice == "4":
                     pass
                 elif book_ops_choice == "5":
-                    pass
+                    operations.BookOperations.display_books(library_books)
+                else:
+                    print(f"{book_ops_choice} is not an available option.\n")
             elif main_menu_choice == "2":
                 print("\tUser Operations:")
                 print("\t1. Add a new user\n\t2. View user details\n\t3. Display all users")
