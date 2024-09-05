@@ -28,14 +28,9 @@ class BookOperations:
             print(f"Book: {book}")
             for detail, info in category.items():
                 print(f"\t{detail}: {info}")
-            
-            
-            
-            
-class UserOperations(BookOperations):
-    def __init__(self, username, library_id, book, author):
-        super().__init__(book)
-        super().__init__(author)
+      
+class UserOperations:
+    def __init__(self, username, library_id):
         self.__username = username
         self.__library_id = library_id
 
@@ -49,9 +44,12 @@ class UserOperations(BookOperations):
     def display_users(self):
         pass
 
-class AuthorOperations(BookOperations):
+class AuthorOperations:
     def __init__(self, author):
-        super().__init__(author)
+        self.author = author
+
+    def add_new_author(self, author, birthday, birthplace):
+        pass
 
     def view_author_details(self, author):
         pass
