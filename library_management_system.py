@@ -34,9 +34,11 @@ def main():
                     operations.BookOperations.add_new_book(library_books, book, author, genre, pub_date)
                     print(library_books)
                 elif book_ops_choice == "2":
-                    pass
+                    book = input("Please enter the name of the book you wish to borrow: ").title()
+                    operations.BookOperations.borrow_book(library_books, book)
                 elif book_ops_choice == "3":
-                    pass
+                    book = input("Please enter the name of the book you wish to return: ").title()
+                    operations.BookOperations.return_book(library_books, book)
                 elif book_ops_choice == "4":
                     pass
                 elif book_ops_choice == "5":

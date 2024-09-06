@@ -14,11 +14,25 @@ class BookOperations:
         else:
             print(f"\n{book} is already in the library.")
 
-    def borrow_book(self, book, author):
-        pass
+    def borrow_book(self, book):
+        if book not in self:
+            print(f"{book} is not available in our library.")
+        else:
+            if self[book]["Availability"] == "In Stock":
+                self[book]["Availability"] = "Out of Stock"
+                print("Here you go! Please return this book by the appropriate date if you want to avoid late fees.")
+            else:
+                print(f"I'm sorry, {book} is already out on loan.")
 
-    def return_book(self, book, author):
-        pass
+    def return_book(self, book):
+        if book not in self:
+            print(f"{book} is not available in our library.")
+        else:
+            if self[book]["Availability"] == "Out of Stock":
+                self[book]["Availability"] = "In Stock"
+                print(f"Thank you for returning {book} to our shelves!")
+            else:
+                print(f"{book} is already in stock.")
 
     def search_books(self, book, author):
         pass
