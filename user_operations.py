@@ -28,7 +28,6 @@ class UserOperations:
             for detail, info in self[username].items():
                 print(f"   {detail}: {info}")
         else:
-            print(f"Username: {username}")
             for detail, info in self[username].items():
                 if detail == "Library ID":
                     print(f"   {detail}: REDACTED")

@@ -23,14 +23,11 @@ class BookOperations:
         else:
             if self[book]["Availability"] == "In Stock":
                 self[book]["Availability"] = "Out of Stock"
-                if username not in user_dict:
-                    print("I'm sorry, that username is invalid. If you haven't created a username, please do so before borrowing a book.")
-                else:
-                    if type(user_dict[username]["Checked Out Books"]) is not set: 
-                        user_dict[username]["Checked Out Books"] = {book}
-                    elif type(user_dict[username]["Checked Out Books"]) is set:
-                        user_dict[username]["Checked Out Books"].add(book)
-                    print("Here you go! Please return this book by the appropriate date if you want to avoid late fees.")
+                if type(user_dict[username]["Checked Out Books"]) is not set: 
+                    user_dict[username]["Checked Out Books"] = {book}
+                elif type(user_dict[username]["Checked Out Books"]) is set:
+                    user_dict[username]["Checked Out Books"].add(book)
+                print("Here you go! Please return this book by the appropriate date if you want to avoid late fees.")
             else:
                 print(f"I'm sorry, {book} is already out on loan.")
 
@@ -41,7 +38,7 @@ class BookOperations:
             if self[book]["Availability"] == "Out of Stock":
                 self[book]["Availability"] = "In Stock"
                 if book in user_dict[username]["Checked Out Books"]:
-                    user_dict[username].remove(book)
+                    user_dict[username]["Checked Out Books"].remove(book)
                     print(f"Thank you for returning {book} to our shelves!")
                 else:
                     print(f"{book} is not in your list of checked-out materials. You must have returned it already!")

@@ -43,13 +43,27 @@ def main():
                 
                 elif book_ops_choice == "2":
                     username = input("Please enter your username: ")
-                    book = input("Please enter the name of the book you wish to borrow: ").title()
-                    book_operations.BookOperations.borrow_book(library_books, user_id, book, username)
+                    if username not in user_id:
+                        print("I'm sorry, that username is invalid. If you haven't created a username, please do so before borrowing a book.")
+                    else:
+                        id = input("Please enter your 6 character Library ID: ").upper()
+                        if id not in user_id[username]["Library ID"]:
+                            print("Ivalid Library ID. Returning to the main menu...")
+                        else:
+                            book = input("Please enter the name of the book you wish to borrow: ").title()
+                            book_operations.BookOperations.borrow_book(library_books, user_id, book, username)
                 
                 elif book_ops_choice == "3":
                     username = input("Please enter your username: ")
-                    book = input("Please enter the name of the book you wish to return: ").title()
-                    book_operations.BookOperations.return_book(library_books, user_id, book, username)
+                    if username not in user_id:
+                        print("Invalid Username.")
+                    else:
+                        id = input("Please enter your 6 character Library ID: ").upper()
+                        if id not in user_id[username]["Library ID"]:
+                            print("Invalid Library ID. Returning to the main menu...")
+                        else:
+                            book = input("Please enter the name of the book you wish to return: ").title()
+                            book_operations.BookOperations.return_book(library_books, user_id, book, username)
                 
                 elif book_ops_choice == "4":
                     title = input("Please enter the title of the book you wish to search for: ").title()
@@ -103,11 +117,26 @@ def main():
                 
                 if author_ops_choice == "1":
                     author_name = input("Enter the name of the author you wish to add: ").title()
-                    author_birth = input(f"Enter {author_name}'s date of birth (dd/mm/yyyy): ")
-                    birth_match = re.search(r"(\d{2})/(\d{2})/(\d{4})", author_birth)
-                    author_death = input(f"Enter {author_name}'s date of death (dd/mm/yyyy or 'present' if they are still alive): ")
-                    if author_death == "present":
-                        author_death = "N/A"            
+                    while True:
+                        author_birth = input(f"Enter {author_name}'s date of birth (dd/mm/yyyy): ")
+                        date_format = re.match(r"(\d{2})/(\d{2})/(\d{4})", author_birth)
+                        if not date_format:
+                            print("Invalid, please use the following format: dd/mm/yyyy")
+                            continue
+                        else:
+                            break
+                    while True:
+                        author_death = input(f"Enter {author_name}'s date of death (dd/mm/yyyy or 'present' if they are still alive): ")
+                        if author_death == "present":
+                            author_death = "N/A"   
+                            break
+                        else:
+                            date_format = re.match(r"(\d{2})/(\d{2})/(\d{4})", author_death)
+                            if not date_format:
+                                print("Invalid, please use the following format: dd/mm/yyyy") 
+                                continue
+                            else:
+                                break  
                     author_operations.AuthorOperations.add_new_author(author_details, author_name, author_birth, author_death)
                     print(f"{author_name} added to registry!")
                 
