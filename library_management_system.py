@@ -14,7 +14,7 @@ def main():
         print("")
         print("Please create a username before borrowing any books.")
         main_menu_choice = input("What would you like to do? (enter 1, 2, 3, or 4 for the menu choices listed above): ")
-        match = re.search("[1-5]", main_menu_choice)
+        match = re.search(r"[1-5]", main_menu_choice)
         if not match:
             print("You must enter a number between 1 and 4.")
             continue
@@ -65,7 +65,7 @@ def main():
                 print("\tUser Operations:")
                 print("\t1. Add a new user\n\t2. View user details\n\t3. Display all users")
                 user_ops_choice = input("Which operation would you like to perform? (1, 2, or 3): ")
-                match = re.search("[1-3]", user_ops_choice)
+                match = re.search(r"[1-3]", user_ops_choice)
                 if not match:
                     print("You must enter a number between 1 and 3.")
                 
@@ -96,7 +96,7 @@ def main():
                 print("\tAuthor Operations:")
                 print("\t1. Add a new author\n\t2. View author details\n\t3. Display all authors")
                 author_ops_choice = input("Which operation would you like to perform? (1, 2, or 3): ")
-                match = re.search("[1-3]", author_ops_choice)
+                match = re.search(r"[1-3]", author_ops_choice)
                 
                 if not match:
                     print("You must enter a number between 1 and 3.")
@@ -104,9 +104,10 @@ def main():
                 if author_ops_choice == "1":
                     author_name = input("Enter the name of the author you wish to add: ").title()
                     author_birth = input(f"Enter {author_name}'s date of birth (dd/mm/yyyy): ")
+                    birth_match = re.search(r"(\d{2})/(\d{2})/(\d{4})", author_birth)
                     author_death = input(f"Enter {author_name}'s date of death (dd/mm/yyyy or 'present' if they are still alive): ")
                     if author_death == "present":
-                        author_death = "N/A"
+                        author_death = "N/A"            
                     author_operations.AuthorOperations.add_new_author(author_details, author_name, author_birth, author_death)
                     print(f"{author_name} added to registry!")
                 
