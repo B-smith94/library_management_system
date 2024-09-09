@@ -1,6 +1,7 @@
 import book_operations
 import user_operations
 import author_operations
+import library_backup
 import re
 
 user_id = {}
@@ -9,6 +10,10 @@ author_details = {}
 
 def main():
     while True:
+        library_file = library_backup.LibraryBookBackup(library_books)
+        author_file = library_backup.AuthorInfoBackup(author_details)
+        user_file = library_backup.UserInfoBackup(user_id)
+        
         print("Welcome to the Library Management System!\n")
         print("Main Menu:\n1. Book Operations\n2. User Operations\n3. Author Operations\n4. Quit")
         print("")
@@ -20,6 +25,9 @@ def main():
             continue
        
         if main_menu_choice == "4":
+            library_file.book_backup(library_books)
+            author_file.author_backup(author_details)
+            user_file.user_backup(user_id)
             print("Have a nice day!")
             break
        
@@ -118,22 +126,22 @@ def main():
                 if author_ops_choice == "1":
                     author_name = input("Enter the name of the author you wish to add: ").title()
                     while True:
-                        author_birth = input(f"Enter {author_name}'s date of birth (dd/mm/yyyy): ")
+                        author_birth = input(f"Enter {author_name}'s date of birth (mm/dd/yyyy): ")
                         date_format = re.match(r"(\d{2})/(\d{2})/(\d{4})", author_birth)
                         if not date_format:
-                            print("Invalid, please use the following format: dd/mm/yyyy")
+                            print("Invalid, please use the following format: mm/dd/yyyy")
                             continue
                         else:
                             break
                     while True:
-                        author_death = input(f"Enter {author_name}'s date of death (dd/mm/yyyy or 'present' if they are still alive): ")
+                        author_death = input(f"Enter {author_name}'s date of death (mm/dd/yyyy or 'present' if they are still alive): ")
                         if author_death == "present":
                             author_death = "N/A"   
                             break
                         else:
                             date_format = re.match(r"(\d{2})/(\d{2})/(\d{4})", author_death)
                             if not date_format:
-                                print("Invalid, please use the following format: dd/mm/yyyy") 
+                                print("Invalid, please use the following format: mm/dd/yyyy") 
                                 continue
                             else:
                                 break  

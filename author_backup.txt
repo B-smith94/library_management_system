@@ -1,0 +1,1 @@
+Tolkien: {'Date of Birth': '01/03/1892', 'Date of Death': '09/02/1973'}, Crichton: {'Date of Birth': '10/23/1942', 'Date of Death': '11/04/2008'}
