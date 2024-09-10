@@ -17,7 +17,7 @@ class AuthorOperations:
             for detail, info in self[author].items():
                 print(f"   {detail}: {info}")
         except KeyError:
-            print(f"{author}is not currently in our database.")
+            print(f"{author} is not currently in our database.")
 
     def display_all_authors(self):
         for author, category in self.items():

@@ -98,8 +98,13 @@ def main():
                 if user_ops_choice == "1":
                     while True:
                         username = input("Please enter a username: ")
-                        if username in user_id:
-                            print(f"{username} is not a valid username. Please try again.")
+                        username_format = re.match(r"[A-Za-z0-9]-*_*[A-Za-z0-9]", username)
+                        if not username_format:
+                            print("Username must follow the following formats: User-name123, username123, User_name123")
+                            continue
+
+                        elif username in user_id:
+                            print(f"{username} is already taken. Please try again.")
                             continue
                         
                         else:
@@ -108,7 +113,14 @@ def main():
                             break
 
                 elif user_ops_choice == "2":
-                    username = input("Please enter the username you wish to search: ")
+                    while True:
+                        username = input("Please enter the username you wish to search: ")
+                        username_format = re.match(r"[A-Za-z0-9]-*_*[A-Za-z0-9]", username)
+                        if not username_format:
+                            print("Username must follow the following formats: User-name123, username123, User_name123")
+                            continue
+                        else:
+                            break
                     library_id = input("Please enter your Library ID Number: ").upper()
                     user_operations.UserOperations.view_user_details(user_id, username, library_id)
                     
@@ -128,7 +140,7 @@ def main():
                     print("You must enter a number between 1 and 3.")
                 
                 if author_ops_choice == "1":
-                    author_name = input("Enter the name of the author you wish to add: ").title()
+                    author_name = input("Enter the name of the author you wish to add: ").title() 
                     while True:
                         author_birth = input(f"Enter {author_name}'s date of birth (mm/dd/yyyy): ")
                         date_format = re.match(r"(\d{2})/(\d{2})/(\d{4})", author_birth)
