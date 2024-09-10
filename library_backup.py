@@ -6,22 +6,22 @@ class LibraryBookBackup:
         with open('book_backup.txt', 'w') as file:
             for book, category in library_dict.items():
                 file.write(f"{book}: \n{category}\n")
-                
 
     def get_books_from_file(self, book_dict):
         i = 0
         with open('book_backup.txt', 'r') as file:
             for line in file.readlines():
-                if i % 2 == 0:
-                    book = line.strip('\n')
-                else:
-                    detail = line.strip('\n')
-                    details = eval(detail)
-                i += 1    
-                book_dict[book] = details
-                print(book_dict)
-                
-
+                try:
+                    if i % 2 == 0:
+                        book = line.strip('\n')
+                    elif i % 2 != 0:
+                        detail = line.strip('\n')
+                        details = eval(detail)
+                    i += 1
+                    book_dict[book] = details
+                except UnboundLocalError:
+                    pass
+            
 class UserInfoBackup:
     def __init__(self, user_dict):
         self.user_dict = dict()
@@ -35,15 +35,17 @@ class UserInfoBackup:
         i = 0
         with open('user_backup.txt', 'r') as file:
             for line in file.readlines() :
-                if i % 2 == 0:
-                    user = line.strip('\n')
-                elif i % 2 != 0:
-                    detail = line.strip('\n')
-                    details = eval(detail)
-                i += 1 
-            user_dict[user] = details
-            print(user_dict)
-
+                try:
+                    if i % 2 == 0:
+                        user = line.strip('\n')
+                    elif i % 2 != 0:
+                        detail = line.strip('\n')
+                        details = eval(detail)
+                    i += 1 
+                    user_dict[user] = details
+                except UnboundLocalError:
+                    pass
+            
 class AuthorInfoBackup:
     def __init__(self, author_dict):
         self.author_dict = dict()
@@ -57,12 +59,15 @@ class AuthorInfoBackup:
         i = 0
         with open('author_backup.txt', 'r') as file:
             for line in file.readlines():
-                if i % 2 == 0:
-                    author = line.strip('\n')
-                else:
-                    detail = line.strip('\n')
-                    details = eval(detail)
-                i += 1    
-            author_dict[author] = details
-            print(author_dict)
+                try:
+                    if i % 2 == 0:
+                        author = line.strip('\n')
+                    else:
+                        detail = line.strip('\n')
+                        details = eval(detail)
+                    i += 1    
+                    author_dict[author] = details
+                except UnboundLocalError:
+                    pass
+            
                 
