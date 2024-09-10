@@ -15,9 +15,9 @@ def main():
         author_file = library_backup.AuthorInfoBackup(author_details)
         user_file = library_backup.UserInfoBackup(user_id)
         
-        
-        
-        
+        library_file.get_books_from_file(library_books)
+        user_file.get_users_from_file(user_id)
+        author_file.get_authors_from_file(author_details)
                 
         print("Welcome to the Library Management System!\n")
         print("Main Menu:\n1. Book Operations\n2. User Operations\n3. Author Operations\n4. Quit")
@@ -37,13 +37,11 @@ def main():
        
         else:
             if main_menu_choice == "1":
-                library_file.get_books_from_file(library_books)
                 print("\tBook Operations:")
                 print("\t1. Add a new book\n\t2. Borrow a book\n\t3. Return a book\n\t4. Search for a book\n\t5. Display all books.")
                 book_ops_choice = input("Which operation would you like to perform? (1, 2, 3, 4, or 5): ")
                 match = re.search("[1-5]", book_ops_choice)
                 
-
                 if not match:
                     print("You must enter a number between 1 and 5.")
                 
@@ -90,7 +88,6 @@ def main():
                     print(f"{book_ops_choice} is not an available option.\n")
             
             elif main_menu_choice == "2":
-                user_file.get_users_from_file(user_id)
                 print("\tUser Operations:")
                 print("\t1. Add a new user\n\t2. View user details\n\t3. Display all users")
                 user_ops_choice = input("Which operation would you like to perform? (1, 2, or 3): ")
@@ -111,8 +108,8 @@ def main():
                             break
 
                 elif user_ops_choice == "2":
-                    username = input("Please enter your username: ")
-                    library_id = input("please enter your Library ID Number: ").upper()
+                    username = input("Please enter the username you wish to search: ")
+                    library_id = input("Please enter your Library ID Number: ").upper()
                     user_operations.UserOperations.view_user_details(user_id, username, library_id)
                     
                 elif user_ops_choice == "3":
@@ -122,7 +119,6 @@ def main():
                     print(f"{user_ops_choice} is not an available option.\n")
             
             elif main_menu_choice == '3':
-                author_file.get_authors_from_file(author_details)
                 print("\tAuthor Operations:")
                 print("\t1. Add a new author\n\t2. View author details\n\t3. Display all authors")
                 author_ops_choice = input("Which operation would you like to perform? (1, 2, or 3): ")
@@ -157,7 +153,7 @@ def main():
                     print(f"{author_name} added to registry!")
                 
                 elif author_ops_choice == "2":
-                    author = input("Enter the full name of the author you wish to view: ").title()
+                    author = input("Enter the name of the author you wish to view: ").title()
                     author_operations.AuthorOperations.view_author_details(author_details, author)
                 
                 elif author_ops_choice == "3":

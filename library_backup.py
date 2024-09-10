@@ -5,7 +5,7 @@ class LibraryBookBackup:
     def book_backup(self, library_dict):
         with open('book_backup.txt', 'w') as file:
             for book, category in library_dict.items():
-                file.write(f"{book} \n{category}\n")
+                file.write(f"{book}\n{category}\n")
 
     def get_books_from_file(self, book_dict):
         i = 0
@@ -30,7 +30,7 @@ class UserInfoBackup:
     def user_backup(self, user_dict):
         with open('user_backup.txt', 'w') as file:
             for user, category in user_dict.items():
-                file.write(f"{user} \n{category}\n")
+                file.write(f"{user}\n{category}\n")
     
     def get_users_from_file(self, user_dict):
         i = 0
@@ -55,7 +55,7 @@ class AuthorInfoBackup:
     def author_backup(self, author_dict):
         with open('author_backup.txt', 'w') as file:
             for author, category in author_dict.items():
-                file.write(f"{author} \n{category}\n")
+                file.write(f"{author}\n{category}\n")
 
     def get_authors_from_file(self, author_dict):
         i = 0

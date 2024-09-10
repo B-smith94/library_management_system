@@ -44,13 +44,12 @@ class BookOperations:
                 print(f"{book} is already in stock.")
 
     def search_books(self, book):
-        if not self[book]:
-            print(f"{book} is not available in our library.")
-        
-        else:
+        try:
             print(f"Book: {book}")
             for detail, info in self[book].items():
                 print(f"   {detail}: {info}")
+        except KeyError:
+            print(f"{book} is not available in our library.")
 
     def display_books(self):
         for book, category in self.items():
