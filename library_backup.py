@@ -21,7 +21,7 @@ class LibraryBookBackup:
                     book_dict[book] = details
                 except UnboundLocalError:
                     pass
-            print(book_dict)
+            
             
 class UserInfoBackup:
     def __init__(self, user_dict):
@@ -46,7 +46,7 @@ class UserInfoBackup:
                     user_dict[user] = details
                 except UnboundLocalError:
                     pass
-            print(user_dict)
+            
 
 class AuthorInfoBackup:
     def __init__(self, author_dict):
@@ -71,5 +71,5 @@ class AuthorInfoBackup:
                     author_dict[author] = details
                 except UnboundLocalError:
                     pass
-            print(author_dict)
+            
                 

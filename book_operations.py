@@ -1,5 +1,3 @@
-import re
-
 class BookOperations:
     def __init__(self, book, author):    
         self = dict()
@@ -46,7 +44,7 @@ class BookOperations:
                 print(f"{book} is already in stock.")
 
     def search_books(self, book):
-        if book not in self:
+        if not self[book]:
             print(f"{book} is not available in our library.")
         
         else:
