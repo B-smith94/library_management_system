@@ -1,1 +1,4 @@
-Lord Of The Rings: {'Author': 'Tolkien', 'Genre': 'Fantasy', 'Publication Date': '1950', 'Availability': 'In Stock'}, Jurassic Park: {'Author': 'Crichton', 'Genre': 'Science fiction', 'Publication Date': '1990', 'Availability': 'In Stock'}
+Lord Of The Rings: 
+{'Author': 'Tolkien', 'Genre': 'Fantasy', 'Publication Date': '1954', 'Availability': 'In Stock'}
+Jurassic Park: 
+{'Author': 'Crichton', 'Genre': 'Science fiction', 'Publication Date': '1990', 'Availability': 'In Stock'}

@@ -3,6 +3,7 @@ import user_operations
 import author_operations
 import library_backup
 import re
+import pdb
 
 user_id = {}
 library_books = {}
@@ -13,7 +14,11 @@ def main():
         library_file = library_backup.LibraryBookBackup(library_books)
         author_file = library_backup.AuthorInfoBackup(author_details)
         user_file = library_backup.UserInfoBackup(user_id)
-        
+
+        library_file.get_books_from_file(library_books)
+        #author_file.get_authors_from_file(author_details)
+        #user_file.get_users_from_file(user_id)
+                
         print("Welcome to the Library Management System!\n")
         print("Main Menu:\n1. Book Operations\n2. User Operations\n3. Author Operations\n4. Quit")
         print("")
