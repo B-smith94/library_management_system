@@ -47,7 +47,7 @@ When you enter '2' in the Main Menu, it will take you to the Book Operations sub
 
 The program will once again ask you to enter a number cooresponding with the desired menu choice:
 
-    Which operation woul dyou like to perform? (1, 2, 3, 4, 5): |
+    Which operation would you like to perform? (1, 2, 3, 4, 5): |
 
 Entering '1' will prompt the program to ask you for details about the book you wish to add:
 
