@@ -15,13 +15,15 @@ def main():
         author_file = library_backup.AuthorInfoBackup(author_details)
         user_file = library_backup.UserInfoBackup(user_id)
 
+        library_file.get_books_from_file()
+        
+
         library_file.get_books_from_file(library_books)
         #author_file.get_authors_from_file(author_details)
         #user_file.get_users_from_file(user_id)
                 
         print("Welcome to the Library Management System!\n")
         print("Main Menu:\n1. Book Operations\n2. User Operations\n3. Author Operations\n4. Quit")
-        print("")
         print("Please create a username before borrowing any books.")
         main_menu_choice = input("What would you like to do? (enter 1, 2, 3, or 4 for the menu choices listed above): ")
         match = re.search(r"[1-5]", main_menu_choice)
