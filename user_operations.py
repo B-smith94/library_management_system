@@ -23,16 +23,19 @@ class UserOperations:
         print(f"Unique Library Identifier (Library ID)(Do NOT share with others): {library_id}")
     
     def view_user_details(self, username, library_id):
-        print(f"Username: {username}")
-        if self[username]["Library ID"] == library_id:
-            for detail, info in self[username].items():
-                print(f"   {detail}: {info}")
-        else:
-            for detail, info in self[username].items():
-                if detail == "Library ID":
-                    print(f"   {detail}: REDACTED")
-                else:
+        try:
+            print(f"Username: {username}")
+            if self[username]["Library ID"] == library_id:
+                for detail, info in self[username].items():
                     print(f"   {detail}: {info}")
+            else:
+                for detail, info in self[username].items():
+                    if detail == "Library ID":
+                        print(f"   {detail}: REDACTED")
+                    else:
+                        print(f"   {detail}: {info}")
+        except KeyError:
+            print("That username does not exist or was entered incorrectly.")
 
     def display_users(self):
         for username, category in self.items():

@@ -1,4 +1,4 @@
-b-money94: : : 
+b-money94 
 {'Library ID': 'TUB5E3', 'Checked Out Books': {}}
-loaf45: : : 
+loaf45 
 {'Library ID': '0X7N85', 'Checked Out Books': {}}

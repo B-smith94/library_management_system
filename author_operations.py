@@ -12,12 +12,15 @@ class AuthorOperations:
         else:
             print(f"{author} already exists in the database.")
     def view_author_details(self, author):
-        if author not in self:
-            print(f"I'm sorry, {author} does not exist in our database.")
-        else:
-            print(f"Author: {author}")
-            for detail, info in self[author].items():
-                print(f"   {detail}: {info}")
+        try:
+            if author not in self:
+                print(f"I'm sorry, {author} does not exist in our database.")
+            else:
+                print(f"Author: {author}")
+                for detail, info in self[author].items():
+                    print(f"   {detail}: {info}")
+        except KeyError:
+            print("That author was either entered incorrectly or is not currently in our database.")
 
     def display_all_authors(self):
         for author, category in self.items():

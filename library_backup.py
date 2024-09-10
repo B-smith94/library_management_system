@@ -5,7 +5,7 @@ class LibraryBookBackup:
     def book_backup(self, library_dict):
         with open('book_backup.txt', 'w') as file:
             for book, category in library_dict.items():
-                file.write(f"{book}: \n{category}\n")
+                file.write(f"{book} \n{category}\n")
 
     def get_books_from_file(self, book_dict):
         i = 0
@@ -21,6 +21,7 @@ class LibraryBookBackup:
                     book_dict[book] = details
                 except UnboundLocalError:
                     pass
+            print(book_dict)
             
 class UserInfoBackup:
     def __init__(self, user_dict):
@@ -29,7 +30,7 @@ class UserInfoBackup:
     def user_backup(self, user_dict):
         with open('user_backup.txt', 'w') as file:
             for user, category in user_dict.items():
-                file.write(f"{user}: \n{category}\n")
+                file.write(f"{user} \n{category}\n")
     
     def get_users_from_file(self, user_dict):
         i = 0
@@ -45,7 +46,8 @@ class UserInfoBackup:
                     user_dict[user] = details
                 except UnboundLocalError:
                     pass
-            
+            print(user_dict)
+
 class AuthorInfoBackup:
     def __init__(self, author_dict):
         self.author_dict = dict()
@@ -53,7 +55,7 @@ class AuthorInfoBackup:
     def author_backup(self, author_dict):
         with open('author_backup.txt', 'w') as file:
             for author, category in author_dict.items():
-                file.write(f"{author}: \n{category}\n")
+                file.write(f"{author} \n{category}\n")
 
     def get_authors_from_file(self, author_dict):
         i = 0
@@ -69,5 +71,5 @@ class AuthorInfoBackup:
                     author_dict[author] = details
                 except UnboundLocalError:
                     pass
-            
+            print(author_dict)
                 
