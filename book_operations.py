@@ -1,16 +1,31 @@
+import connect_mysql
+from connect_mysql import connect_database
+
 class BookOperations:
     def __init__(self, book, author):    
         self = dict()
         self.book = book
         self.author = author
         
-    def add_new_book(self, book, author, genre, pub_date):
-        if book not in self:
+    def add_new_book(title, author_id, isbn, publication_date):
+        conn = connect_database()
+        if conn is not None:    
             try:
-                self[book] = {"Author": author, "Genre": genre, "Publication Date": pub_date, "Availability": "In Stock"} 
-                print(f"\n{book} by {author} added to library stock.\n")
+                cursor = conn.cursor()
+                new_book = title, author_id, isbn, publication_date
+                query = "INSERT INTO Books (title, author_id, isbn, publication_date) Values (%s, %s, %s, %s)"
+
+                cursor.execute(query, new_book)
+                conn.commit()
+
+                print("New book successfully added to databse!")
+            except connect_mysql.Error as db_err:
+                print(f"A Database Error has occurred: {db_err}")
             except Exception as e:
                 print(f"An error has occurred: {e}")
+            finally:
+                cursor.close()
+                conn.close()
        
         else:
             print(f"\n{book} is already in the library.")
