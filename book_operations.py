@@ -28,15 +28,16 @@ class BookOperations:
                 conn.close()
 
     def borrow_book(user_id, book_id, borrow_date):
-        conn = connect_database
+        conn = connect_database()
         if conn is not None:
             try:
                 cursor = conn.cursor()
                 newly_borrowed = user_id, book_id, borrow_date
+                book = (book_id, )
                 query_1 = "INSERT INTO borrowed_books(user_id, book_id, borrow_date) VALUES (%s, %s, %s)"
-                query_2 = f"UPDATE books SET availability = BOOLEAN 0 WHERE id = {book_id}"
+                query_2 = "UPDATE books SET availability = BOOLEAN 0 WHERE id = %s"
                 cursor.execute(query_1, newly_borrowed)
-                cursor.execute(query_2)
+                cursor.execute(query_2, book)
                 conn.commit()
 
             except connect_mysql.Error as db_err:
@@ -48,15 +49,16 @@ class BookOperations:
                 conn.close()
 
     def return_book(user_id, book_id, return_date):
-        conn = connect_database
+        conn = connect_database()
         if conn is not None:
             try:
                 cursor = conn.cursor()
                 returned_book = return_date, user_id, book_id
+                book = (book_id, )
                 query_1 = "UPDATE borrowed_books SET return_date = %s WHERE user_id = %s AND book_id = %s"
-                query_2 = f"UPDATE books SET availability = BOOLEAN 1 WHERE id = {book_id}"
+                query_2 = "UPDATE books SET availability = BOOLEAN 1 WHERE id = %s"
                 cursor.execute(query_1, returned_book)
-                cursor.execute(query_2)
+                cursor.execute(query_2, book)
                 conn.commit()
 
             except connect_mysql.Error as db_err:
@@ -72,11 +74,12 @@ class BookOperations:
         if conn is not None:
             try:
                 cursor = conn.cursor()
-                query = f"SELECT * FROM books WHERE title = {title}"
-                cursor.execute(query)
+                book = (title, )
+                query = "SELECT * FROM books WHERE title = %"
+                cursor.execute(query, book)
 
                 for row in cursor.fetchall():
-                    print(row)
+                    print(f"Title: {row[1]}\n\tAuthor ID: {row[2]}\n\tISBN: {row[3]}\n\tPublication Date: {row[4]}\n\tAvaiability (True for available, False for borrowed): {row[5]}")
             except connect_mysql.Error as db_err:
                 print(f"A Database Error has occurred: {db_err}")
             except Exception as e:
@@ -90,12 +93,12 @@ class BookOperations:
         if conn is not None:
             try:
                 cursor = conn.cursor()
-                query = f"SELECT * FROM books"
+                query = "SELECT * FROM books"
 
                 cursor.execute(query)
 
                 for row in cursor.fetchall():
-                    print(row)
+                    print(f"Title: {row[1]}\n\tAuthor ID: {row[2]}\n\tISBN: {row[3]}\n\tPublication Date: {row[4]}\n\tAvaiability (True for available, False for borrowed): {row[5]}")
             except connect_mysql.Error as db_err:
                 print(f"A Database Error has occurred: {db_err}")
             except Exception as e:
@@ -109,9 +112,10 @@ class BookOperations:
         if conn is not None:
             try:
                 cursor = conn.cursor()
-                query = f"SELECT id FROM books WHERE title = {title}"
+                book = (title, )
+                query = "SELECT id FROM books WHERE title = %"
 
-                cursor.execute(query)
+                cursor.execute(query, book)
 
                 for row in cursor.fetchall():
                     return row

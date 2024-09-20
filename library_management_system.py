@@ -117,7 +117,7 @@ def main():
                     library_id = input("Please enter your Library ID Number: ").upper()
                     verification = user_operations.UserOperations.verify_library_id(name, library_id)
                     if verification is True:
-                        user_operations.UserOperations.view_user_details(user_id, library_id)
+                        user_operations.UserOperations.view_user_details(name)
                     else:
                         print("Name and Library ID do not match, please try again.")
                     

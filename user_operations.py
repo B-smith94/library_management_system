@@ -24,13 +24,14 @@ class UserOperations:
             try:
                 cursor = conn.cursor()
                 new_user = name, stored_id
+                user_name = (name, )
                 query_1 = "INSERT INTO users (name, library_id) VALUES (%s, %s)"
-                query_2 = f"SELECT library_id FROM users WHERE name = {name}"
+                query_2 = "SELECT library_id FROM users WHERE name = %s"
                 
                 cursor.execute(query_1, new_user)
                 conn.commit()
                 
-                cursor.execute(query_2)
+                cursor.execute(query_2, user_name)
                 
                 print(f"{name} successfully added to the database!")
                 for row in cursor.fetchall():
@@ -43,21 +44,18 @@ class UserOperations:
                 cursor.close()
                 conn.close()        
     
-    def view_user_details(name, library_id):
+    def view_user_details(name):
         conn = connect_database()
         if conn is not None:
             try:
                 cursor = conn.cursor()
-                query = f"SELECT * FROM users WHERE name = {name}"
-                cursor.execute(query, name)
+                user_name = (name, )
+                query = "SELECT * FROM users WHERE name = %s"
+                cursor.execute(query, user_name)
 
                 for row in cursor.fetchall():
-                    set_id = UserOperations.set_library_id(library_id)
-                    fetched_id = set_id.get_library_id()
-                    if fetched_id in row:
-                        print(f"Name: {row[1]}\n   Library Id: {row[2]}")
-                    else:
-                        print("Name and Library ID do not match. Please try again.")
+                    print(f"\nName: {row[1]}\nLibrary ID: {row[2]}")
+
             except connect_mysql.Error as db_err:
                 print(f"A Database Error has occurred: {db_err}")
             except Exception as e:
@@ -79,7 +77,7 @@ class UserOperations:
             except connect_mysql.Error as db_err:
                 print(f"A Database Error has occurred: {db_err}")
             except Exception as e:
-                print(f"An error has occurred: {e}")
+                print(row)
             finally:
                 cursor.close()
                 conn.close()
@@ -89,8 +87,9 @@ class UserOperations:
         if conn is not None:
             try:
                 cursor = conn.cursor()
-                query = f"SELECT id FROM users WHERE name = {name}"
-                cursor.execute(query)
+                user_name = (name, )
+                query = "SELECT id FROM users WHERE name = %s"
+                cursor.execute(query, user_name)
                 
                 for row in cursor.fetchall():
                     return row
@@ -107,15 +106,17 @@ class UserOperations:
         if conn is not None:
             try:
                 cursor = conn.cursor()
-                query = f"SELECT library_id FROM users WHERE name = {name}"
+                user_name = (name, )
+                query = "SELECT library_id FROM users WHERE name = %s"
 
-                cursor.execute(query)
+                cursor.execute(query, user_name)
 
-                for row in conn.fetchall():
+                for row in cursor.fetchall():
                     set_id = UserOperations(name, library_id)
                     set_id.set_library_id(library_id)
                     fetched_id = set_id.get_library_id()
                     if fetched_id in row:
+                        print("ID Verified!")
                         return True
                     else:
                         return False

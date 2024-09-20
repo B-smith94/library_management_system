@@ -24,22 +24,19 @@ class AuthorOperations:
             finally:
                 cursor.close()
                 conn.close()
-        
-        else:
-            print(f"{author} already exists in the database.")
 
     def view_author_details(author):
         conn = connect_database()
         if conn is not None:
             try:
                 cursor = conn.cursor()
-                
+                author_name = (author, )
                 query = "SELECT * FROM authors WHERE name = %s"
 
-                cursor.execute(query, author)
+                cursor.execute(query, author_name)
 
                 for row in cursor.fetchall():
-                    return row
+                    print(f"Author: {row[1]}\n   Biography: {row[2]}")
             except connect_mysql.Error as db_err:
                 print(f"A Database Error has occurred: {db_err}")
             except Exception as e:
@@ -53,13 +50,12 @@ class AuthorOperations:
         if conn is not None:
             try:
                 cursor = conn.cursor()
-                
                 query = "SELECT * FROM authors"
 
                 cursor.execute(query)
 
                 for row in cursor.fetchall():
-                    print(row)
+                    print(f"Author: {row[1]}\n   Biography: {row[2]}")
             except connect_mysql.Error as db_err:
                 print(f"A Database Error has occurred: {db_err}")
             except Exception as e:
@@ -73,8 +69,9 @@ class AuthorOperations:
         if conn is not None:
             try:
                 cursor = conn.cursor()
+                author_name = (author, )
                 query = "SELECT id FROM authors WHERE name = %s"
-                cursor.execute(query, author)
+                cursor.execute(query, author_name)
 
                 for row in cursor.fetchall():
                     return row
