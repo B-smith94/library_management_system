@@ -26,49 +26,99 @@ class BookOperations:
             finally:
                 cursor.close()
                 conn.close()
-       
-        else:
-            print(f"\n{book} is already in the library.")
 
-    def borrow_book(self, user_dict, book, username):
-        if book not in self:
-            print(f"{book} is not available in our library.")
-        else:
-            if self[book]["Availability"] == "In Stock":
-                self[book]["Availability"] = "Out of Stock"
-                if type(user_dict[username]["Checked Out Books"]) is not set: 
-                    user_dict[username]["Checked Out Books"] = {book}
-                elif type(user_dict[username]["Checked Out Books"]) is set:
-                    user_dict[username]["Checked Out Books"].add(book)
-                print("Here you go! Please return this book by the appropriate date if you want to avoid late fees.")
-            else:
-                print(f"I'm sorry, {book} is already out on loan.")
+    def borrow_book(user_id, book_id, borrow_date):
+        conn = connect_database
+        if conn is not None:
+            try:
+                cursor = conn.cursor()
+                newly_borrowed = user_id, book_id, borrow_date
+                query_1 = "INSERT INTO borrowed_books(user_id, book_id, borrow_date) VALUES (%s, %s, %s)"
+                query_2 = f"UPDATE books SET availability = BOOLEAN 0 WHERE id = {book_id}"
+                cursor.execute(query_1, newly_borrowed)
+                cursor.execute(query_2)
+                conn.commit()
 
-    def return_book(self, user_dict, book, username):
-        if book not in self:
-            print(f"{book} is not available in our library.")
-        else:
-            if self[book]["Availability"] == "Out of Stock":
-                self[book]["Availability"] = "In Stock"
-                if book in user_dict[username]["Checked Out Books"]:
-                    user_dict[username]["Checked Out Books"].remove(book)
-                    print(f"Thank you for returning {book} to our shelves!")
-                else:
-                    print(f"{book} is not in your list of checked-out materials. You must have returned it already!")
-            else:
-                print(f"{book} is already in stock.")
+            except connect_mysql.Error as db_err:
+                print(f"A Database Error has occurred: {db_err}")
+            except Exception as e:
+                print(f"An error has occurred: {e}")
+            finally:
+                cursor.close()
+                conn.close()
 
-    def search_books(self, book):
-        try:
-            print(f"Book: {book}")
-            for detail, info in self[book].items():
-                print(f"   {detail}: {info}")
-        except KeyError:
-            print(f"{book} is not available in our library.")
+    def return_book(user_id, book_id, return_date):
+        conn = connect_database
+        if conn is not None:
+            try:
+                cursor = conn.cursor()
+                returned_book = return_date, user_id, book_id
+                query_1 = "UPDATE borrowed_books SET return_date = %s WHERE user_id = %s AND book_id = %s"
+                query_2 = f"UPDATE books SET availability = BOOLEAN 1 WHERE id = {book_id}"
+                cursor.execute(query_1, returned_book)
+                cursor.execute(query_2)
+                conn.commit()
 
-    def display_books(self):
-        for book, category in self.items():
-            print(f"Book: {book}")
-            for detail, info in category.items():
-                print(f"   {detail}: {info}")
-      
+            except connect_mysql.Error as db_err:
+                print(f"A Database Error has occurred: {db_err}")
+            except Exception as e:
+                print(f"An error has occurred: {e}")
+            finally:
+                cursor.close()
+                conn.close()
+
+    def search_books(title):
+        conn = connect_database()
+        if conn is not None:
+            try:
+                cursor = conn.cursor()
+                query = f"SELECT * FROM books WHERE title = {title}"
+                cursor.execute(query)
+
+                for row in cursor.fetchall():
+                    print(row)
+            except connect_mysql.Error as db_err:
+                print(f"A Database Error has occurred: {db_err}")
+            except Exception as e:
+                print(f"An error has occurred: {e}")
+            finally:
+                cursor.close()
+                conn.close()
+
+    def display_books():
+        conn = connect_database()
+        if conn is not None:
+            try:
+                cursor = conn.cursor()
+                query = f"SELECT * FROM books"
+
+                cursor.execute(query)
+
+                for row in cursor.fetchall():
+                    print(row)
+            except connect_mysql.Error as db_err:
+                print(f"A Database Error has occurred: {db_err}")
+            except Exception as e:
+                print(f"An error has occurred: {e}")
+            finally:
+                cursor.close()
+                conn.close()
+    
+    def retrieve_book_id(self, title):
+        conn = connect_database()
+        if conn is not None:
+            try:
+                cursor = conn.cursor()
+                query = f"SELECT id FROM books WHERE title = {title}"
+
+                cursor.execute(query)
+
+                for row in cursor.fetchall():
+                    return row
+            except connect_mysql.Error as db_err:
+                print(f"A Database Error has occurred: {db_err}")
+            except Exception as e:
+                print(f"An error has occurred: {e}")
+            finally:
+                cursor.close()
+                conn.close()

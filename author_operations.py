@@ -5,7 +5,7 @@ class AuthorOperations:
     def __init__(self, author):
         self.author = author
 
-    def add_new_author(self, author, birthday, date_of_death):
+    def add_new_author(author, birthday, date_of_death):
         conn = connect_database()
         if conn is not None:
             try:
@@ -27,33 +27,14 @@ class AuthorOperations:
         
         else:
             print(f"{author} already exists in the database.")
-    def view_author_details(self, author):
+
+    def view_author_details(author):
         conn = connect_database()
         if conn is not None:
             try:
                 cursor = conn.cursor()
                 
                 query = "SELECT * FROM authors WHERE name = %s"
-
-                cursor.execute(query, author)
-
-                for row in cursor.fetchall():
-                    print(row)
-            except connect_mysql.Error as db_err:
-                print(f"A Database Error has occurred: {db_err}")
-            except Exception as e:
-                print(f"An error has occurred: {e}")
-            finally:
-                cursor.close()
-                conn.close()
-
-    def return_author_id(self, author):
-        conn = connect_database()
-        if conn is not None:
-            try:
-                cursor = conn.cursor()
-                
-                query = "SELECT id FROM authors WHERE name = %s"
 
                 cursor.execute(query, author)
 
@@ -67,7 +48,7 @@ class AuthorOperations:
                 cursor.close()
                 conn.close()
 
-    def display_all_authors(self):
+    def display_all_authors():
         conn = connect_database()
         if conn is not None:
             try:
@@ -79,6 +60,24 @@ class AuthorOperations:
 
                 for row in cursor.fetchall():
                     print(row)
+            except connect_mysql.Error as db_err:
+                print(f"A Database Error has occurred: {db_err}")
+            except Exception as e:
+                print(f"An error has occurred: {e}")
+            finally:
+                cursor.close()
+                conn.close()
+
+    def retrieve_author_id(author):
+        conn = connect_database()
+        if conn is not None:
+            try:
+                cursor = conn.cursor()
+                query = "SELECT id FROM authors WHERE name = %s"
+                cursor.execute(query, author)
+
+                for row in cursor.fetchall():
+                    return row
             except connect_mysql.Error as db_err:
                 print(f"A Database Error has occurred: {db_err}")
             except Exception as e:
