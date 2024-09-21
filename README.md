@@ -51,16 +51,18 @@ The program will once again ask you to enter a number cooresponding with the des
 
 Entering '1' will prompt the program to ask you for details about the book you wish to add:
 
+    --Book Operation 1: Add a New Book--
+    
     Enter the title of the book you wish to add: |
     Please enter the author: |
-    Please enter the genre (example: fantasy): |
+    Please enter the ISBN number for {book}: |
     What year was {book} published? (yyyy): |
 
 Once done, it will then add the book with all it's information to a local database.
 
-Entering '2' will ask for your username and Library ID. __REMINDER__: you MUST have a username and library ID in order to borrow or return books. For information on how to create a username and ID, see __User Operations__.
+Entering '2' will ask for your username and Library ID. __REMINDER__: you MUST have a Library ID in order to borrow or return books. For information on how to create a Library ID, see __User Operations__.
 
-    Please enter your username: |
+    Please enter your first and last name: |
     Please enter your 6 character Library ID: |
 
 Once the program has verified your identity, it will then ask you to provide the title of the book you wish to borrow:
@@ -69,7 +71,7 @@ Once the program has verified your identity, it will then ask you to provide the
 
 The book will then register that you are borrowing the book, and edit the appropriate data.
 
-Entering '3' will allow you to return a book you previously borrowed. As before, the program will ask you to enter your username and library ID before further action is taken.
+Entering '3' will allow you to return a book you previously borrowed. As before, the program will ask you to enter your name and library ID before further action is taken.
 Once it verifies your identity, it will ask you to enter in the title of the book you wish to return:
 
     Please enter the name of the book you wish to return: |
@@ -83,8 +85,8 @@ Entering '4' will allow you to look up a specific title:
 It will then display the information for that book in the following format:
 
     Book: {book title}
-       Author: {name of the author}
-       Genre: {genre}
+       Author ID: {Author ID Number in Database}
+       ISBN: {genre}
        Publication Date: {publication date}
        Availability: In Stock/Out of Stock (If it is already loaned out, this will display Out of Stock)
 
@@ -99,23 +101,23 @@ When you enter '2' on the Main Menu, the program will take you to the User Opera
         2. View user details
         3. Display all users
 
-Entering '1' will allow you to create a user profile. It will prompt you to create a username:
+Entering '1' will allow you to create a user profile. It will prompt you to enter your first and last name:
 
-    Please enter a username:  |
+    Enter your first and last name:  |
 
-If the username is already created, it will tell you that the username is invalid and give you the opportunity to try again.
-If the username is available, the program will then tell you it was successfull, and then provide you with a 6 character Library ID:
+
+If your first and last name were entered, the program will then tell you it was successfull, and then provide you with a 6 character Library ID:
 
     Unique Library Identifier (Library ID)(Do NOT share with others): ABC123
 
-This Library ID acts like a password to your username and ensures that only you will be able to check out or return books in your name.
+This Library ID acts like a password/unique identifier and ensures that only you will be able to check out or return books in your name.
 
 Entering '2' will allow you to search for specific users in the User ID database. It will prompt you to enter a username and password:
 
-    Please enter the username you wish to search: |
+    Please enter your first and last name: |
     Please enter your Library ID Number: |
 
-If the Library ID matches the username you are searching, it will display the details in the following manner:
+If the Library ID and name match, it will display the details in the following manner:
 
     Username: {username}
        Library ID: ABC123
