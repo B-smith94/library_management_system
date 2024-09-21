@@ -29,24 +29,33 @@ def main():
                     print("You must enter a number between 1 and 5.")
                 
                 if book_ops_choice == "1":
+                    print("\n--Book Operation 1: Add a New Book--\n")
                     book = input("Enter the title of the book you wish to add: ").title()
                     author = input("Please enter the author: ").title()
-                    isbn = input(f"Please enter the ISBN number for {book}")
-                    pub_date = input(f"What year was {book} published? (yyyy): ")
+                    isbn = input(f"Please enter the ISBN number for {book}: ")
+                    while True:
+                        pub_date = input(f"What year was {book} published? (yyyy-mm-dd): ")
+                        date_format = re.match(r"(\d{4})-(\d{2})-(\d{2})", pub_date)
+                        if not date_format:
+                            print("Invalid, please use the correct format.")
+                            continue
+                        else:
+                            break
                     author_id = author_operations.AuthorOperations.retrieve_author_id(author)
                     book_operations.BookOperations.add_new_book(book, author_id, isbn, pub_date)
                 
                 elif book_ops_choice == "2":
+                    print("\n--Book Operation 2: Borrow a Book--\n")
                     name = input("Please enter your name: ").title()
                     library_id = input("Please enter your 6 character Library ID: ").upper()
-                    verification = user_operations.UserOperations.verify_library_id(name)
+                    verification = user_operations.UserOperations.verify_library_id(name, library_id)
                     if verification is True:
                         book = input("Identify verified. Please enter the name of the book you wish to borrow: ").title()
                         while True:
                             borrow_date = input(f"Enter the date the book was borrowed: (yyyy-mm-dd): ")
-                            date_format = re.match(r"(\d{4})/(\d{2})/(\d{2})", borrow_date)
+                            date_format = re.match(r"(\d{4})-(\d{2})-(\d{2})", borrow_date)
                             if not date_format:
-                                print("Invalid, please use the following format: mm/dd/yyyy")
+                                print("Invalid, please use the correct format.")
                                 continue
                             else:
                                 break
@@ -57,16 +66,24 @@ def main():
                         print("Name and Library_ID do not match, please try again.")
             
                 elif book_ops_choice == "3":
-                    name = input("Please enter your name: ").title()
+                    print("\n--Book Operation 3: Return a Book--\n")
+                    while True:
+                        name = input("Enter your first and last name: ").title()
+                        name_format = re.match(r"[A-Za-z\sA-Za-z]", name)
+                        if not name_format:
+                            print("Did not include both first and last name, please try again.")
+                            continue
+                        else:
+                            break
                     library_id = input("Please enter your 6 character Library ID: ").upper()
-                    verification = user_operations.UserOperations.verify_library_id()
+                    verification = user_operations.UserOperations.verify_library_id(name, library_id)
                     if verification is True:
                         book = input("Please enter the title of the book you wish to return: ").title()
                         while True:
                             return_date = input(f"Enter the date the book was returned: (yyyy-mm-dd): ")
                             date_format = re.match(r"(\d{4})-(\d{2})-(\d{2})", return_date)
                             if not date_format:
-                                print("Invalid, please use the following format: mm/dd/yyyy")
+                                print("Invalid, please use the correct format.")
                                 continue
                             else:
                                 break
@@ -77,10 +94,12 @@ def main():
                         print("Name and Library_ID do not match, please try again.")
                 
                 elif book_ops_choice == "4":
+                    print("\n--Book Operation 4: Search for a Book--\n")
                     title = input("Please enter the title of the book you wish to search for: ").title()
                     book_operations.BookOperations.search_books(title)
                 
                 elif book_ops_choice == "5":
+                    print("\n--Book Operation 5: Display all Books--\n")
                     book_operations.BookOperations.display_books()
                 
                 else:
@@ -95,6 +114,7 @@ def main():
                     print("You must enter a number between 1 and 3.")
                 
                 if user_ops_choice == "1":
+                    print("\n--User Operation 1: Add a New user--\n")
                     while True:
                         name = input("Enter your first and last name: ").title()
                         name_format = re.match(r"[A-Za-z\sA-Za-z]", name)
@@ -106,6 +126,7 @@ def main():
                             break
 
                 elif user_ops_choice == "2":
+                    print("\n--User Operation 2: View User Details--\n")
                     while True:
                         name = input("Enter your first and last name: ").title()
                         name_format = re.match(r"[A-Za-z\sA-Za-z]", name)
@@ -122,7 +143,8 @@ def main():
                         print("Name and Library ID do not match, please try again.")
                     
                 elif user_ops_choice == "3":
-                    user_operations.UserOperations.display_users(user_id)
+                    print("\n--User Operation 3: Display All Users--\n")
+                    user_operations.UserOperations.display_users()
                 
                 else:
                     print(f"{user_ops_choice} is not an available option.\n")
@@ -137,24 +159,25 @@ def main():
                     print("You must enter a number between 1 and 3.")
                 
                 if author_ops_choice == "1":
+                    print("\n--Author Operation 1: Add A New Author--\n")
                     author_name = input("Enter the name of the author you wish to add: ").title() 
                     while True:
-                        author_birth = input(f"Enter {author_name}'s date of birth (yyyy-dd-mm): ")
+                        author_birth = input(f"Enter {author_name}'s date of birth (yyyy-mm-dd): ")
                         date_format = re.match(r"(\d{4})-(\d{2})-(\d{2})", author_birth)
                         if not date_format:
-                            print("Invalid, please use the following format: mm/dd/yyyy")
+                            print("Invalid, please use the correct format.")
                             continue
                         else:
                             break
                     while True:
-                        author_death = input(f"Enter {author_name}'s date of death (mm/dd/yyyy or 'present' if they are still alive): ")
+                        author_death = input(f"Enter {author_name}'s date of death (yyyy-mm-dd or 'present' if they are still alive): ")
                         if author_death == "present":
                             author_death = "N/A"   
                             break
                         else:
                             date_format = re.match(r"(\d{4})-(\d{2})-(\d{2})", author_death)
                             if not date_format:
-                                print("Invalid, please use the following format: mm/dd/yyyy") 
+                                print("Invalid, please use the correct format.") 
                                 continue
                             else:
                                 break  
@@ -162,10 +185,12 @@ def main():
                     print(f"{author_name} added to registry!")
                 
                 elif author_ops_choice == "2":
+                    print("\n--Author Operation 2: View Author Details--\n")
                     author = input("Enter the name of the author you wish to view: ").title()
                     author_operations.AuthorOperations.view_author_details(author)
                 
                 elif author_ops_choice == "3":
+                    print("\n--Author Operation 3: Display All Authors--\n")
                     author_operations.AuthorOperations.display_all_authors()
                 
                 else:

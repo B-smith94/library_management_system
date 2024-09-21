@@ -1,6 +1,0 @@
-Lord Of The Rings
-{'Author': 'Tolkien', 'Genre': 'Fantasy', 'Publication Date': '1954', 'Availability': 'In Stock'}
-Jurassic Park
-{'Author': 'Crichton', 'Genre': 'Science fiction', 'Publication Date': '1990', 'Availability': 'In Stock'}
-Harry Potter
-{'Author': 'Rowling', 'Genre': 'Fantasy', 'Publication Date': '1997', 'Availability': 'In Stock'}

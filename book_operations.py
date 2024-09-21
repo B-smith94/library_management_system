@@ -35,10 +35,11 @@ class BookOperations:
                 newly_borrowed = user_id, book_id, borrow_date
                 book = (book_id, )
                 query_1 = "INSERT INTO borrowed_books(user_id, book_id, borrow_date) VALUES (%s, %s, %s)"
-                query_2 = "UPDATE books SET availability = BOOLEAN 0 WHERE id = %s"
+                query_2 = "UPDATE books SET availability = 0 WHERE id = %s"
                 cursor.execute(query_1, newly_borrowed)
                 cursor.execute(query_2, book)
                 conn.commit()
+                print("Here is your book! Please remember to return it when you are done.")
 
             except connect_mysql.Error as db_err:
                 print(f"A Database Error has occurred: {db_err}")
@@ -56,10 +57,11 @@ class BookOperations:
                 returned_book = return_date, user_id, book_id
                 book = (book_id, )
                 query_1 = "UPDATE borrowed_books SET return_date = %s WHERE user_id = %s AND book_id = %s"
-                query_2 = "UPDATE books SET availability = BOOLEAN 1 WHERE id = %s"
+                query_2 = "UPDATE books SET availability = 1 WHERE id = %s"
                 cursor.execute(query_1, returned_book)
                 cursor.execute(query_2, book)
                 conn.commit()
+                print("Thank you for returning your book to the Library!")
 
             except connect_mysql.Error as db_err:
                 print(f"A Database Error has occurred: {db_err}")
@@ -75,11 +77,14 @@ class BookOperations:
             try:
                 cursor = conn.cursor()
                 book = (title, )
-                query = "SELECT * FROM books WHERE title = %"
+                query = "SELECT * FROM books WHERE title = %s"
                 cursor.execute(query, book)
 
                 for row in cursor.fetchall():
-                    print(f"Title: {row[1]}\n\tAuthor ID: {row[2]}\n\tISBN: {row[3]}\n\tPublication Date: {row[4]}\n\tAvaiability (True for available, False for borrowed): {row[5]}")
+                    if row[5] == 1:
+                        print(f"Title: {row[1]}\n\tAuthor ID: {row[2]}\n\tISBN: {row[3]}\n\tPublication Date: {row[4]}\n\tAvaiability: In Stock")
+                    else:
+                        print(f"Title: {row[1]}\n\tAuthor ID: {row[2]}\n\tISBN: {row[3]}\n\tPublication Date: {row[4]}\n\tAvaiability: Out Of Stock")
             except connect_mysql.Error as db_err:
                 print(f"A Database Error has occurred: {db_err}")
             except Exception as e:
@@ -98,7 +103,10 @@ class BookOperations:
                 cursor.execute(query)
 
                 for row in cursor.fetchall():
-                    print(f"Title: {row[1]}\n\tAuthor ID: {row[2]}\n\tISBN: {row[3]}\n\tPublication Date: {row[4]}\n\tAvaiability (True for available, False for borrowed): {row[5]}")
+                    if row[5] == 1:
+                        print(f"Title: {row[1]}\n\tAuthor ID: {row[2]}\n\tISBN: {row[3]}\n\tPublication Date: {row[4]}\n\tAvaiability: In Stock")
+                    else:
+                        print(f"Title: {row[1]}\n\tAuthor ID: {row[2]}\n\tISBN: {row[3]}\n\tPublication Date: {row[4]}\n\tAvaiability: Out Of Stock")
             except connect_mysql.Error as db_err:
                 print(f"A Database Error has occurred: {db_err}")
             except Exception as e:
@@ -107,18 +115,18 @@ class BookOperations:
                 cursor.close()
                 conn.close()
     
-    def retrieve_book_id(self, title):
+    def retrieve_book_id(title):
         conn = connect_database()
         if conn is not None:
             try:
                 cursor = conn.cursor()
                 book = (title, )
-                query = "SELECT id FROM books WHERE title = %"
+                query = "SELECT id FROM books WHERE title = %s"
 
                 cursor.execute(query, book)
 
                 for row in cursor.fetchall():
-                    return row
+                    return str(row[0])
             except connect_mysql.Error as db_err:
                 print(f"A Database Error has occurred: {db_err}")
             except Exception as e:

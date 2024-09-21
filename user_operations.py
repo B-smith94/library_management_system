@@ -92,7 +92,7 @@ class UserOperations:
                 cursor.execute(query, user_name)
                 
                 for row in cursor.fetchall():
-                    return row
+                    return str(row[0])
             except connect_mysql.Error as db_err:
                 print(f"A Database Error has occurred: {db_err}")
             except Exception as e:

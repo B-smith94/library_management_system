@@ -36,7 +36,7 @@ class AuthorOperations:
                 cursor.execute(query, author_name)
 
                 for row in cursor.fetchall():
-                    print(f"Author: {row[1]}\n   Biography: {row[2]}")
+                    print(f"Author: {row[1]}\n   {row[2]}")
             except connect_mysql.Error as db_err:
                 print(f"A Database Error has occurred: {db_err}")
             except Exception as e:
@@ -55,7 +55,7 @@ class AuthorOperations:
                 cursor.execute(query)
 
                 for row in cursor.fetchall():
-                    print(f"Author: {row[1]}\n   Biography: {row[2]}")
+                    print(f"Author: {row[1]}\n   {row[2]}")
             except connect_mysql.Error as db_err:
                 print(f"A Database Error has occurred: {db_err}")
             except Exception as e:
@@ -74,7 +74,7 @@ class AuthorOperations:
                 cursor.execute(query, author_name)
 
                 for row in cursor.fetchall():
-                    return row
+                    return str(row[0])
             except connect_mysql.Error as db_err:
                 print(f"A Database Error has occurred: {db_err}")
             except Exception as e:
