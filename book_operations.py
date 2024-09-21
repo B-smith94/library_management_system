@@ -18,7 +18,7 @@ class BookOperations:
                 cursor.execute(query, new_book)
                 conn.commit()
 
-                print("New book successfully added to databse!")
+                print("New book successfully added to database!")
             except connect_mysql.Error as db_err:
                 print(f"A Database Error has occurred: {db_err}")
             except Exception as e:

@@ -34,7 +34,7 @@ def main():
                     author = input("Please enter the author: ").title()
                     isbn = input(f"Please enter the ISBN number for {book}: ")
                     while True:
-                        pub_date = input(f"What year was {book} published? (yyyy-mm-dd): ")
+                        pub_date = input(f"When was {book} published? (yyyy-mm-dd): ")
                         date_format = re.match(r"(\d{4})-(\d{2})-(\d{2})", pub_date)
                         if not date_format:
                             print("Invalid, please use the correct format.")
@@ -46,7 +46,7 @@ def main():
                 
                 elif book_ops_choice == "2":
                     print("\n--Book Operation 2: Borrow a Book--\n")
-                    name = input("Please enter your name: ").title()
+                    name = input("Please enter your first and last name: ").title()
                     library_id = input("Please enter your 6 character Library ID: ").upper()
                     verification = user_operations.UserOperations.verify_library_id(name, library_id)
                     if verification is True:
@@ -182,7 +182,6 @@ def main():
                             else:
                                 break  
                     author_operations.AuthorOperations.add_new_author(author_name, author_birth, author_death)
-                    print(f"{author_name} added to registry!")
                 
                 elif author_ops_choice == "2":
                     print("\n--Author Operation 2: View Author Details--\n")
