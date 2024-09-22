@@ -50,7 +50,7 @@ def main():
                     library_id = input("Please enter your 6 character Library ID: ").upper()
                     verification = user_operations.UserOperations.verify_library_id(name, library_id)
                     if verification is True:
-                        book = input("Identify verified. Please enter the name of the book you wish to borrow: ").title()
+                        book = input("Please enter the name of the book you wish to borrow: ").title()
                         while True:
                             borrow_date = input(f"Enter the date the book was borrowed: (yyyy-mm-dd): ")
                             date_format = re.match(r"(\d{4})-(\d{2})-(\d{2})", borrow_date)
