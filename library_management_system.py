@@ -52,7 +52,7 @@ def main():
                     if verification is True:
                         book = input("Please enter the name of the book you wish to borrow: ").title()
                         while True:
-                            borrow_date = input(f"Enter the date the book was borrowed: (yyyy-mm-dd): ")
+                            borrow_date = input(f"Enter the date the book was borrowed (yyyy-mm-dd): ")
                             date_format = re.match(r"(\d{4})-(\d{2})-(\d{2})", borrow_date)
                             if not date_format:
                                 print("Invalid, please use the correct format.")
