@@ -77,14 +77,14 @@ class BookOperations:
             try:
                 cursor = conn.cursor()
                 book = (title, )
-                query = "SELECT * FROM books WHERE title = %s"
+                query = "SELECT b.title, a.name, b.isbn, b.publication_date, b.availability FROM books b, authors a WHERE b.title = %s AND a.id = b.author_id"
                 cursor.execute(query, book)
 
                 for row in cursor.fetchall():
-                    if row[5] == 1:
-                        print(f"Title: {row[1]}\n\tAuthor ID: {row[2]}\n\tISBN: {row[3]}\n\tPublication Date: {row[4]}\n\tAvaiability: In Stock")
+                    if row[4] == 1:
+                        print(f"Title: {row[0]}\n\tAuthor: {row[1]}\n\tISBN: {row[2]}\n\tPublication Date: {row[3]}\n\tAvaiability: In Stock")
                     else:
-                        print(f"Title: {row[1]}\n\tAuthor ID: {row[2]}\n\tISBN: {row[3]}\n\tPublication Date: {row[4]}\n\tAvaiability: Out Of Stock")
+                        print(f"Title: {row[0]}\n\tAuthor: {row[1]}\n\tISBN: {row[2]}\n\tPublication Date: {row[3]}\n\tAvaiability: Out Of Stock")
             except connect_mysql.Error as db_err:
                 print(f"A Database Error has occurred: {db_err}")
             except Exception as e:
@@ -98,15 +98,15 @@ class BookOperations:
         if conn is not None:
             try:
                 cursor = conn.cursor()
-                query = "SELECT * FROM books"
+                query =  query = "SELECT b.title, a.name, b.isbn, b.publication_date, b.availability FROM books b, authors a WHERE a.id = b.author_id"
 
                 cursor.execute(query)
 
                 for row in cursor.fetchall():
-                    if row[5] == 1:
-                        print(f"Title: {row[1]}\n\tAuthor ID: {row[2]}\n\tISBN: {row[3]}\n\tPublication Date: {row[4]}\n\tAvaiability: In Stock")
+                    if row[4] == 1:
+                        print(f"Title: {row[0]}\n\tAuthor: {row[1]}\n\tISBN: {row[2]}\n\tPublication Date: {row[3]}\n\tAvaiability: In Stock")
                     else:
-                        print(f"Title: {row[1]}\n\tAuthor ID: {row[2]}\n\tISBN: {row[3]}\n\tPublication Date: {row[4]}\n\tAvaiability: Out Of Stock")
+                        print(f"Title: {row[0]}\n\tAuthor: {row[1]}\n\tISBN: {row[2]}\n\tPublication Date: {row[3]}\n\tAvaiability: Out Of Stock")
             except connect_mysql.Error as db_err:
                 print(f"A Database Error has occurred: {db_err}")
             except Exception as e:
