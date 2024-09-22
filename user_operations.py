@@ -50,11 +50,17 @@ class UserOperations:
             try:
                 cursor = conn.cursor()
                 user_name = (name, )
-                query = "SELECT * FROM users WHERE name = %s"
+                query = "SELECT u.name, u.library_id, b.title, bb.return_date, bb.borrow_date FROM users u, books b, borrowed_books bb WHERE name = %s AND b.id = bb.book_id AND u.id = bb.user_id"
                 cursor.execute(query, user_name)
 
-                for row in cursor.fetchall():
-                    print(f"\nName: {row[1]}\nLibrary ID: {row[2]}")
+                for row in cursor.fetchall():    
+                    borrowed_books = []
+                    if not row[3]:
+                        borrowed_books.append(f"{row[2]}, borrowed on {row[4]}")
+                if not borrowed_books:
+                    print(f"\nName: {row[0]}\nLibrary ID: {row[1]}\nBorrrowed Books: None")
+                else:
+                    print(f"\nName: {row[0]}\nLibrary ID: {row[1]}\nBorrrowed Books: {borrowed_books}")
 
             except connect_mysql.Error as db_err:
                 print(f"A Database Error has occurred: {db_err}")
@@ -72,8 +78,9 @@ class UserOperations:
                 query = "SELECT id, name FROM users"
                 cursor.execute(query)
 
+                print("Current users:")
                 for row in cursor.fetchall():
-                    print(row)
+                    print(f"{row[0]}. {row[1]}")
             except connect_mysql.Error as db_err:
                 print(f"A Database Error has occurred: {db_err}")
             except Exception as e:
